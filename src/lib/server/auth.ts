@@ -1,13 +1,14 @@
+import { getRequestEvent } from "solid-js/web";
 import { useSession } from "vinxi/http";
-import { redirect } from "@solidjs/router";
-import { INTERNAL_APP_ID } from "../constants";
 
+// TODO: Replace all of this with a proper auth system
 const SESSION_SECRET = "thisisadummysessionsecretverylongbutnotgood";
 
-const VALID_ACCOUNT_IDS = ['account1', 'account2'];
+const VALID_EMAILS = ['test@test.com', 'test@example.com'];
 
 export type SessionData = {
-  appId?: string;
+  email?: string;
+  id?: string;
   accountId?: string;
 };
 
@@ -20,22 +21,33 @@ export async function getSession() {
   return session
 }
 
-export async function authenticate(externalAccountId: string) {
+export async function authenticate(email: string, password: string) {
   
-  if (!VALID_ACCOUNT_IDS.includes(externalAccountId)) {
-    throw new Error('Invalid account ID');
+  if (!VALID_EMAILS.includes(email)) {
+    throw new Error('Invalid email');
   }
   const session = await getSession();
   await session.update({
-    appId: INTERNAL_APP_ID,
-    accountId: externalAccountId,
+    email: email,
+    id: VALID_EMAILS.indexOf(email).toString(),
+    accountId: 'account'
   });
 }
 
 export async function logout() {
   const session = await getSession();
   await session.update({
-    appId: undefined,
-    accountId: undefined
+    email: undefined,
+    id: undefined,
+    accountId: undefined,
   })
+}
+
+export function ensureAuthenticated(): SessionData {
+  const request = getRequestEvent()
+  let session = request?.locals.session
+  if (!session?.id || !session?.accountId || !session?.email) {
+    throw new Error('Unauthorized')
+  }
+  return session
 }
