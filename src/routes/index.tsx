@@ -1,11 +1,9 @@
 import { A, createAsync, RouteDefinition } from "@solidjs/router";
 import { Show, Suspense } from "solid-js";
 import { loadUserData } from "~/lib/server/app";
-import { protectedRoute } from "~/lib/server/routes";
 
 export const route = {
   preload: async () => {
-    protectedRoute()
     loadUserData()
   }
 } satisfies RouteDefinition;
