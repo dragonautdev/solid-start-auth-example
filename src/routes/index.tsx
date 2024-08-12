@@ -1,4 +1,4 @@
-import { A, createAsync, RouteDefinition } from "@solidjs/router";
+import { createAsync, RouteDefinition } from "@solidjs/router";
 import { Show, Suspense } from "solid-js";
 import { loadUserData } from "~/lib/server/app";
 import { protectedRoute } from "~/lib/server/routes";

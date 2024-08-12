@@ -1,13 +1,9 @@
 import {
   action,
-  cache,
-  createAsync,
   redirect,
-  RouteDefinition,
-  RouteSectionProps,
   useAction,
 } from "@solidjs/router";
-import { createSignal, Show } from "solid-js";
+import { createSignal } from "solid-js";
 import { auth } from "~/lib/server";
 
 const login = action(async (email: string, password: string) => {
@@ -31,7 +27,7 @@ export default function Auth() {
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    console.log(email(), password());
+    setError('');
     try {
       const result = await loginAction(email(), password());
       if (result instanceof Error) {
