@@ -1,5 +1,5 @@
 {
-  "name": "example-with-tailwindcss",
+  "name": "solid-start-auth-example",
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",
@@ -17,5 +17,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "wrangler": "^3.71.0"
   }
 }
