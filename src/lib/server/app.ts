@@ -13,6 +13,8 @@ export const loadUserData = cache(async () => {
     return result 
   } catch (error: any) {
     await logout()
-    return redirect(`/login`)
+    return redirect(`/login`, {
+      revalidate: ['session', 'user']
+    })
   }
-}, 'installation')
+}, 'user')

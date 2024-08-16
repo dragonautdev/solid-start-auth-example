@@ -5,13 +5,12 @@ import { protectedRoute } from "~/lib/server/routes";
 
 export const route = {
   preload: async () => {
-    protectedRoute()
+    await protectedRoute()
     loadUserData()
   }
 } satisfies RouteDefinition;
 
 export default function Home() {
-
   const userData = createAsync(() => loadUserData(), { deferStream: true });
 
   return (

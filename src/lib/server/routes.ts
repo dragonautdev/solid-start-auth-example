@@ -1,13 +1,15 @@
-import { redirect } from "@solidjs/router";
+import { cache, redirect } from "@solidjs/router";
 import { getRequestEvent } from "solid-js/web";
 
-export function protectedRoute() {
+export const protectedRoute = cache(() => {
   "use server";
   const session = getRequestEvent()?.locals.session;
 
   if (!session) {
-    return redirect('/login');
+    return redirect('/login', {
+      revalidate: ['session', 'user']
+    });
   }
 
-  console.log(`Session found ${session.accountId}`)
-}
+  return session
+}, 'session')

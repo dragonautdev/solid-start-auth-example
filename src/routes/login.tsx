@@ -14,7 +14,7 @@ const login = action(async (email: string, password: string) => {
     return err as Error;
   }
   throw redirect("/", {
-    revalidate: "session",
+    revalidate: ["session", 'user'],
   });
 });
 
